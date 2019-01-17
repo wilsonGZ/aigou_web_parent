@@ -50,7 +50,7 @@
         margin-bottom: 0;
     }
     #productType el-col {
-        border: 1px solid red;
+        border: 1px solid #1feeff;
         border-radius: 4px;
     }
     .grid-content {

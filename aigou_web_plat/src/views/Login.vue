@@ -10,7 +10,6 @@
     <el-checkbox v-model="checked" checked class="remember">记住密码</el-checkbox>
     <el-form-item style="width:100%;">
       <el-button type="primary" style="width:100%;" @click.native.prevent="handleSubmit2" :loading="logining">登录</el-button>
-      <!--<el-button @click.native.prevent="handleReset2">重置</el-button>-->
     </el-form-item>
   </el-form>
 </template>
@@ -27,11 +26,9 @@
         rules2: {
           account: [
             { required: true, message: '请输入账号', trigger: 'blur' },
-            //{ validator: validaePass }
           ],
           checkPass: [
             { required: true, message: '请输入密码', trigger: 'blur' },
-            //{ validator: validaePass2 }
           ]
         },
         checked: true
@@ -42,32 +39,40 @@
         this.$refs.ruleForm2.resetFields();
       },
       handleSubmit2(ev) {
-        var _this = this;
+        // var _this = this;
         this.$refs.ruleForm2.validate((valid) => {
           if (valid) {
-            //_this.$router.replace('/table');
             this.logining = true;
             //NProgress.start();
             var loginParams = { name: this.ruleForm2.account, password: this.ruleForm2.checkPass };
-            //https://www.easy-mock.com/mock/5c3957f10157fc56d707bc95/aigou/services/plat/login
-              //this表示当前vue对象
+              //this表示当前vue对象uu
               this.$http.post("/plat/login",loginParams)
-                .then(data=>{
+                .then(({data})=>{
                     this.logining = false;
-                    console.log(data)
-                    let { success, message,retsultObj } = data.data;
+                    // console.log(data)
+                    let success= data.success;
+                    let message = data.message;
+                    let obj = data.resultObj;
+                    // console.log(success);
                     if (!success) {
                         this.$message({
-                            message: message,
+                            message: message+"dafafafsafafas",
                             type: 'error'
                         });
                     } else {
-                        retsultObj= {"name":"zs","age":18}
+                       var retsultObj= {"name":"dalao","age":18}
                         sessionStorage.setItem('user', JSON.stringify(retsultObj));
-                        ///main
-                        this.$router.push({ path: '/main' });
+                        //main
+                        this.$router.push(
+                            {
+                              "path": '/main'
+                            }
+                        );
+                        console.log(1111111)
                     }
-                })
+                }).catch(res=>{
+                    console.log('chuchuole')
+              })
           } else {
             console.log('error submit!!');
             return false;

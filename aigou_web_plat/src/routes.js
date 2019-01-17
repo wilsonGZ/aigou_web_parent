@@ -31,7 +31,6 @@ let routes = [
         name: '首页',
         leaf: true,//只有一个节点
         iconCls: 'fa fa-bar-chart',
-        redirect: { path: '/main' },
         children: [
             { path: '/main', component: echarts, name: '首页' }
         ]
